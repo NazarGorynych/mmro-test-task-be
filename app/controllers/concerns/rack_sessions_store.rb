@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RackSessionsStore
   extend ActiveSupport::Concern
   class FakeRackSession < Hash

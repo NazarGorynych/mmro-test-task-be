@@ -3,6 +3,7 @@
 class Users::SessionsController < Devise::SessionsController
   include RackSessionsStore
   respond_to :json
+  skip_before_action :raise_unauthorized_error
 
   private
 

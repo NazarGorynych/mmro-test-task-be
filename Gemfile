@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 ruby "3.2.2"
@@ -36,14 +38,10 @@ gem "image_processing", "~> 1.2"
 gem "rack-cors"
 
 gem "aasm"
-gem "ar_lazy_preload"
 gem "chronic"
 gem "clockwork"
 gem "pagy"
-gem "money-rails"
-gem "pundit"
-gem "sidekiq"
-gem "sidekiq-unique-jobs"
+gem "strong_migrations"
 
 gem 'devise'
 gem 'devise-jwt'
@@ -63,4 +61,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
 end
-
