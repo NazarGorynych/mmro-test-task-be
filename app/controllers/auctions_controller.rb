@@ -2,6 +2,7 @@
 
 class AuctionsController < ApplicationController
   included AuctionFiltersConcern
+  skip_before_action :raise_unauthorized_error
 
   def index
     @auctions = Auction.all.preload(bids: :user)
