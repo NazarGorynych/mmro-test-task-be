@@ -54,8 +54,9 @@ class Auction < ApplicationRecord
   end
 
   def search(filters: {}, sort_by: nil, sort_order: nil, include_canceled: false)
+    filters = filters.with_indifferent_access
     q = all
-    q = q.unscoped if include_canceled
+    q = q.unscoped if include_canceled || filters.key?("status")
     sort_order ||= :desc
 
     q = apply_filters(q, filters)
@@ -69,8 +70,24 @@ class Auction < ApplicationRecord
   end
 
   def self.apply_filter(q, key, value)
+    table = Auction.arel_table
     case key&.to_sym
     when :id
+      q.where(key => value)
+    when :status
+      q.public_send(value&.downcase&.to_sym)
+    when :start_date_in_range
+      return q unless value[:start].present? && value[:end].present?
+      start_date_begin = Chronic.parse(value[:start])
+      start_date_ended = Chronic.parse(value[:end])
+      q.where(start_date: start_date_begin...start_date_ended)
+    when :end_date_in_range
+      return q unless value[:start].present? && value[:end].present?
+      end_date_begin = Chronic.parse(value[:start])
+      end_date_ended = Chronic.parse(value[:end])
+      q.where(end_date: end_date_begin...end_date_ended)
+    when :title_or_description_match
+      q.where(table[:title].matches("%#{value}%").or(table[:description].matches("%#{value}%")))
     else
       q
     end
@@ -79,10 +96,10 @@ class Auction < ApplicationRecord
   def apply_sort_by(q, sort_by, sort_order)
     sort_by = sort_by&.to_sym
     case sort_by
-    when :created_at, :min_bid, :min_bid_diff
+    when :created_at, :min_bid, :start_date, :end_date
       q.order("#{Auction.arel_table[sort_by].send(sort_order).to_sql} NULLS LAST")
     else
-      q
+      q.order("#{Auction.arel_table[:start_date].send(sort_order).to_sql} NULLS LAST")
     end
   end
 

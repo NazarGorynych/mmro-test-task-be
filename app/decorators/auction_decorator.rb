@@ -39,6 +39,10 @@ class AuctionDecorator
     max_bid&.user&.name
   end
 
+  def status
+    status.titleize
+  end
+
   private
 
   def max_bid

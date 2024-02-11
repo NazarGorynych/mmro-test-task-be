@@ -12,12 +12,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render json: {
         status: 200,
         message: 'Signed up successfully.',
-        email: current_user.email
+        email: current_user.email,
+        jti: current_user.jti
       }, status: :ok
     else
       render json: {
-        status: {message: "User couldn't be created successfully. #{current_user.errors.full_messages.to_sentence}"}
-      }, status: :unprocessable_entity
+        status: 401,
+        message: "Couldn't find an active session."
+      }, status: :unauthorized
     end
   end
 end
