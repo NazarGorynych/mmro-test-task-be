@@ -42,9 +42,9 @@ class Auction < ApplicationRecord
 
   def update_status
     if start_date.present? && (draft? || upcoming?)
-      if start_date > Time.current
+      if start_date > Time.current && !upcoming
         setup!
-      else
+      elsif start_date < Time.current
         start!
       end
     end
