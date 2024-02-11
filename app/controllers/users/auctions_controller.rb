@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Users::AuctionsController < ApplicationController
-
+  included AuctionFiltersConcern
   before_action :set_auctions_scope
 
   def index
+    filter_auction_scope
     @auctions.preload(:winner, bids: :user)
   end
 

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def info;end
 
   def update
-    current_user.update(params.permit(:name))
+    current_user.update(params.permit(:name, :password))
     current_user.avatar.attach(params[:avatar]) if params[:avatar].present?
   end
 

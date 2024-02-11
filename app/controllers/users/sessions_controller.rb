@@ -12,7 +12,8 @@ class Users::SessionsController < Devise::SessionsController
       status: {
         status: 200,
         message: 'Logged in successfully.',
-        email: current_user.email
+        email: current_user.email,
+        jti: current_user.jti
       }
     }, status: :ok
   end
