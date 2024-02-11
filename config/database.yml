@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  database: rmo_prod
+  database: rmo-prod
