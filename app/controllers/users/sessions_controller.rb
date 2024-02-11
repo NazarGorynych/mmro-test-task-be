@@ -4,16 +4,8 @@ class Users::SessionsController < Devise::SessionsController
   include RackSessionsStore
   respond_to :json
   skip_before_action :raise_unauthorized_error
-  before_action :print_env
 
   private
-
-  def print_env
-    p Devise.secret_key
-    Devise.jwt { |jwt| p jwt.secret }
-    p Warden::JWTAuth.config
-    p Devise::JWT.config
-  end
 
   def respond_with(current_user, _opts = {})
     render json: {
