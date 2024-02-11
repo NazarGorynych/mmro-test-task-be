@@ -4,6 +4,7 @@ class Auctions::BidsController < ApplicationController
   before_action :set_auction
   attr_reader :auction
   after_action :update_chanel, on: :create
+  skip_before_action :raise_unauthorized_error, on: :index
 
   def index
     @bids = auction.bids.newest_first.preload(:user)
