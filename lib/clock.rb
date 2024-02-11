@@ -6,8 +6,8 @@ require 'clockwork'
 
 module Clockwork
   configure do |config|
+    config[:tz] = 'UTC'
     config[:logger] = Rails.logger
-    config[:tz] = 'America/New_York'
   end
 
   error_handler do |error|
@@ -15,7 +15,7 @@ module Clockwork
     Rails.logger.error error.backtrace.join("\n")
   end
 
-  every(15.min, "Update Auction Status") do
-
+  every(1.minute, "Update Auction Status") do
+    UpdateAuctionStatusesJob.perform_later
   end
 end
