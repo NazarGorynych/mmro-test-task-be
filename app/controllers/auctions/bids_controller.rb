@@ -17,7 +17,7 @@ class Auctions::BidsController < ApplicationController
   private
 
   def update_chanel
-    ActionCable.server.broadcast("AuctionBidsChannel#{params[:auction_id]}", {bid: { amount: @bid.amount, created_at: @bid.created_at, max_by_user: @bid.max_by_user }, author: { name: current_user.name, email: current_user.email, avatar: url_for(current_user.avatar) }})
+    ActionCable.server.broadcast("AuctionBidsChannel#{params[:auction_id]}", {bid: { amount: @bid.amount, created_at: @bid.created_at, max_by_user: @bid.max_by_user }, author: { name: current_user.name, email: current_user.email, avatar: current_user.avatar.attached? ? url_for(current_user.avatar) : "" }})
   end
 
   def set_auction
