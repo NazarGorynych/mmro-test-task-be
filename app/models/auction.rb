@@ -53,7 +53,7 @@ class Auction < ApplicationRecord
     end
   end
 
-  def search(filters: {}, sort_by: nil, sort_order: nil, include_canceled: false)
+  def self.search(filters: {}, sort_by: nil, sort_order: nil, include_canceled: false)
     filters = filters.with_indifferent_access
     q = all
     q = q.unscoped if include_canceled || filters.key?("status")
@@ -63,10 +63,11 @@ class Auction < ApplicationRecord
     apply_sort_by(q, sort_by, sort_order)
   end
 
-  def apply_filters(q, filters)
+  def self.apply_filters(q, filters)
     filters.each do |key, value|
       q = apply_filter(q, key, value)
     end
+    q
   end
 
   def self.apply_filter(q, key, value)
@@ -93,7 +94,7 @@ class Auction < ApplicationRecord
     end
   end
 
-  def apply_sort_by(q, sort_by, sort_order)
+  def self.apply_sort_by(q, sort_by, sort_order)
     sort_by = sort_by&.to_sym
     case sort_by
     when :created_at, :min_bid, :start_date, :end_date

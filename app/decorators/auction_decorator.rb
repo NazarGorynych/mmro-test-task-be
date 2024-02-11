@@ -40,7 +40,7 @@ class AuctionDecorator
   end
 
   def status
-    status.titleize
+    auction.status.titleize
   end
 
   private
