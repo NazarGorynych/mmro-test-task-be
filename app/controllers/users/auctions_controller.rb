@@ -20,7 +20,7 @@ class Users::AuctionsController < ApplicationController
   end
 
   def create
-    @auction = @auctions.create!(auction_params.merge(images_params.com))
+    @auction = @auctions.create!(auction_params.merge(images_params))
   end
 
   def destroy
