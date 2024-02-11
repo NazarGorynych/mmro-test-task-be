@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuctionsController < ApplicationController
-  included AuctionFiltersConcern
+  include AuctionFiltersConcern
   skip_before_action :raise_unauthorized_error
 
   def index
