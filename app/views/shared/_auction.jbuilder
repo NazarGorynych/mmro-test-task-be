@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.extract! decorated_auction, :title, :description, :min_bid, :min_bid_diff, :bid_type, :status,
+json.extract! decorated_auction, :id, :title, :description, :min_bid, :min_bid_diff, :bid_type, :status,
                                                     :start_date, :end_date, :winner_bid_amount, :winner, :total_donated,
                                                     :max_bid_amount, :max_bid_user_name
 if with_images
